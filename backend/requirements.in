@@ -1,0 +1,31 @@
+# Core framework
+flask
+flask-sqlalchemy
+flask-login
+flask-jwt-extended
+flask-cors
+Flask-Migrate
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Security
+bcrypt
+
+# API & Networking
+requests
+
+# Caching
+redis
+
+# LLM
+langchain
+langchain-community
+langchain-unstructured
+faiss-cpu
+zhipuai
+
+# file processing
+unstructured[all-docs]
+python-magic
