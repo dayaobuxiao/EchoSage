@@ -1,6 +1,6 @@
 # RAG Web Application
 
-This is a web application that provides a RAG (Retrieval-Augmented Generation) system for multiple organizations. It allows customers to query product information and administrators to manage the system.
+This is a web application that provides RAG (Retrieval-Augmented Generation) systems for multiple organizations. It allows customers to query product information and administrators to manage the system.
 
 ## Features
 
