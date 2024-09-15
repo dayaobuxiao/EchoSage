@@ -13,24 +13,6 @@ class CustomAPILLM(LLM):
         self.api_url = api_url
         self.api_key = api_key
 
-    # def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
-    #     headers = {
-    #         "Authorization": f"Bearer {self.api_key}",
-    #         "Content-Type": "application/json"
-    #     }
-    #     data = {
-    #         "model": "glm-4",
-    #         "messages": [{"role": "user", "content": prompt}],
-    #         "max_tokens": 4096,
-    #         "stop": stop,
-    #         "stream": True,
-    #     }
-    #     response = requests.post(self.api_url, headers=headers, json=data)
-    #     if response.status_code == 200:
-    #         return response.json()['choices'][0]['text'].strip()
-    #     else:
-    #         raise ValueError(f"Error from API: {response.text}")
-
     def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
