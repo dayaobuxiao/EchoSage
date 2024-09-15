@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+ import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from './ChatContext';
-import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaEdit, FaEllipsisV } from 'react-icons/fa';
 
-const ConversationList = () => {
+const ConversationList = ({ closeSidebar }) => {
   const {
     conversations,
     currentConversationId,
@@ -14,12 +14,17 @@ const ConversationList = () => {
 
   const [editingId, setEditingId] = useState(null);
   const [editingTitle, setEditingTitle] = useState('');
+  const [showMenu, setShowMenu] = useState(null);
   const editInputRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (editInputRef.current && !editInputRef.current.contains(event.target)) {
         handleEditCancel();
+      }
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(null);
       }
     };
 
@@ -32,6 +37,7 @@ const ConversationList = () => {
   const handleEditStart = (id, currentTitle) => {
     setEditingId(id);
     setEditingTitle(currentTitle);
+    setShowMenu(null);
   };
 
   const handleEditCancel = () => {
@@ -53,20 +59,32 @@ const ConversationList = () => {
     }
   };
 
+  const toggleMenu = (id) => {
+    setShowMenu(showMenu === id ? null : id);
+  };
+
+  const handleSwitchConversation = (id) => {
+    switchConversation(id);
+    closeSidebar();
+  };
+
   return (
-    <div className="w-64 bg-gray-100 dark:bg-gray-800 p-4 overflow-y-auto">
+    <div className="w-full md:w-64 bg-gray-100 dark:bg-gray-800 p-4 overflow-y-auto">
       <button
-        onClick={createNewConversation}
-        className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center"
+        onClick={() => {
+          createNewConversation();
+          closeSidebar();
+        }}
+        className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center shadow-md"
       >
-        <FaPlus className="mr-2" /> New Conversation
+        <FaPlus className="mr-2" /> New Chat
       </button>
       {conversations.map(conv => (
         <div
           key={conv.id}
-          className={`p-2 mb-2 rounded cursor-pointer flex justify-between items-center ${
+          className={`relative p-3 mb-2 rounded-lg cursor-pointer flex items-center ${
             conv.id === currentConversationId ? 'bg-blue-200 dark:bg-blue-700' : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-          }`}
+          } transition-all duration-200 ease-in-out`}
         >
           {editingId === conv.id ? (
             <input
@@ -79,37 +97,43 @@ const ConversationList = () => {
               autoFocus
             />
           ) : (
-            <span
-              onClick={() => switchConversation(conv.id)}
-              className="flex-grow truncate"
-            >
-              {conv.title}
-            </span>
+            <>
+              <span
+                onClick={() => handleSwitchConversation(conv.id)}
+                className="flex-grow truncate"
+              >
+                {conv.title}
+              </span>
+              <button
+                onClick={() => toggleMenu(conv.id)}
+                className="text-gray-600 hover:text-blue-500 ml-2 focus:outline-none"
+              >
+                <FaEllipsisV />
+              </button>
+            </>
           )}
-          <div>
-            {editingId !== conv.id && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditStart(conv.id, conv.title);
-                  }}
-                  className="text-gray-600 hover:text-blue-500 mr-2"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteConversation(conv.id);
-                  }}
-                  className="text-gray-600 hover:text-red-500"
-                >
-                  <FaTrash />
-                </button>
-              </>
-            )}
-          </div>
+          {showMenu === conv.id && (
+            <div
+              ref={menuRef}
+              className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
+            >
+              <button
+                onClick={() => handleEditStart(conv.id, conv.title)}
+                className="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white w-full text-left"
+              >
+                <FaEdit className="inline mr-2" /> Edit
+              </button>
+              <button
+                onClick={() => {
+                  deleteConversation(conv.id);
+                  closeSidebar();
+                }}
+                className="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-red-500 hover:text-white w-full text-left"
+              >
+                <FaTrash className="inline mr-2" /> Delete
+              </button>
+            </div>
+          )}
         </div>
       ))}
     </div>
