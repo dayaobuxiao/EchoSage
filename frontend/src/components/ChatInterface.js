@@ -99,7 +99,7 @@ const ChatInterface = () => {
               className={`px-4 py-2 bg-blue-500 text-white rounded-full transition duration-300 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
               disabled={isLoading}
             >
-              {isLoading ? 'Sending...' : <FaPaperPlane />}
+              <FaPaperPlane />
             </button>
           </div>
         </div>

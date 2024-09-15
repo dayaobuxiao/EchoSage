@@ -5,7 +5,7 @@ import { FaRobot, FaDatabase, FaLock } from 'react-icons/fa';
 const Home = () => {
   return (
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-primary dark:text-secondary mb-6">Welcome to AI Assistant</h1>
+      <h1 className="text-4xl font-bold text-primary dark:text-secondary mb-6">Welcome to EchoSage</h1>
       <p className="text-xl mb-8">Your intelligent companion for all your questions and tasks.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
