@@ -19,8 +19,8 @@ This is a web application that provides RAG (Retrieval-Augmented Generation) sys
 ## Setup and Installation
 
 1. Clone the repository:
-    git clone https://github.com/your-username/rag-web-app.git
-    cd rag-web-app
+    git clone https://github.com/your-username/EchoSage.git
+    cd EchoSage
 2. Build and run the Docker containers:
     docker compose up --build
 3. The application will be available at:
@@ -35,6 +35,7 @@ For local development:
     cd backend
     python -m venv venv
     source venv/bin/activate  # On Windows, use venv\Scripts\activate
+    pip-compile requirements.in
     pip install -r requirements.txt
     flask run
 2. Set up the frontend:
@@ -45,11 +46,7 @@ For local development:
 
 1. Register a new user or log in with existing credentials.
 2. Use the chat interface to query product information.
-3. Admins can access the dashboard to manage users and organizations.
-
-## Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
+3. Admins can access the dashboard to manage users, organizations and documents for each organization.
 
 ## License
 
